@@ -1,0 +1,107 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class HelloApplication
+abstract HelloController
+interface LocalItem
+
+
+List <|-- HelloController
+HelloController <|- HelloApplication
+
+
+
++class HelloApplication {
+    start()
+        +fxmlLoader
+        +scene
+        +stage.setTitle
+        +stage.setScene
+        +stage.show
+
+      +launch()
+
+ }
+
+ +class HelloController {
+        +initialize(URL location, ResourceBundle resources)
+            +datePicker.setvalue(LocalDtae.now())
+
+       ListView<LocalItem> itemList
+       ObservableList<LocalItem> list = FXCollections.observableArrayList()
+
+       +addItem(Event i)
+            list.add((datePicker.setvalue(), descriptionTextField.getText()))
+            itemList.setItems(list)
+            refresh()
+
+       -editItem(Event i)
+            final int selectedIdx = itemList.getSelectionModel().getSelectedIndex()
+            if(selectedIdx != -1)
+                itemList.getItems().size()
+                itemList.getItems().remove(selectedIdx)
+                itemList.getSelectionModel().select(newSelectedIdx)
+                list.remove(selectedIdx)
+
+           list.add()
+           itemList.setItems(list)
+           refresh()
+
+      +deleteItem
+            final int selectedIdx = itemList.getSelectionModel().getSelectedIndex()
+            if(selectedIdx != -1)
+                itemList.getItems().size()
+                itemList.getItems().remove(selectedIdx)
+                itemList.getSelectionModel().select(newSelectedIdx)
+                list.remove(selectedIdx)
+
+            refresh()
+
+      -clearItems(Event i)
+           list.clear()
+
+      -refresh()
+            datePicker.setValue(LocalDate.now())
+            descriptionTextField.setText(null)
+
+     +Object[] getItems()
+            itemList.getItems().toArray()
+
+ }
+
++class LocalItem{
+    -String description
+    -LocalDate date
+
+    + String getDescription()
+
+    +setDescription(String Description)
+            this.Description
+
+    +LocalDate getDate()
+            String localDate = DateTimeFormatter.ISO_DATE.format(date)
+
+    +setDate(LocalDate date)
+            this.date = date
+
+    +LocalItem(LocalDate date, String description)
+           this.setDate(date);
+           this.setDescription(description)
+
+    +String toString()
+            this.getDate() + " : " + this.getDescription()
+
+
+}
+
+
+
+
+
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml
